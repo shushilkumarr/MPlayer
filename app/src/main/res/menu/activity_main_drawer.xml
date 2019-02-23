@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/coupon_section"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/coupon"
+            android:title="@string/coupons" />
+    </group>
+
+    <group
+        android:id="@+id/identify_section"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/identify"
+            android:title="@string/identify" />
+    </group>
+
+    <group android:id="@+id/general_section">
+        <item
+            android:id="@+id/settings"
+            android:title="@string/action_settings" />
+        <item
+            android:id="@+id/s_language"
+            android:title="@string/s_language" />
+        <item
+            android:id="@+id/d_language"
+            android:title="@string/d_language" />
+        <item
+            android:id="@+id/App_Theme"
+            android:title="@string/app_Theme" />
+        <item
+            android:id="@+id/night_mode"
+            app:actionLayout="@layout/night_mode"
+            app:showAsAction="always"
+            tools:ignore="MenuTitle" />
+
+    </group>
+
+    <group>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_question_mark"
+                android:title="@string/help" />
+    </group>
+</menu>
