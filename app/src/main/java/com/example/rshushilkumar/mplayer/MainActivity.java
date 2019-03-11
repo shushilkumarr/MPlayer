@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
         RecyclerView recyclerView = findViewById(R.id.albumView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        SongViewAdapter adapter = new SongViewAdapter(getApplicationContext(), (ArrayList<Song>) fileList);
+        SongViewAdapter adapter = new SongViewAdapter(getApplicationContext(), fileList);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
                 DividerItemDecoration.VERTICAL));
         adapter.setClickListener(new SongViewAdapter.ItemClickListener() {

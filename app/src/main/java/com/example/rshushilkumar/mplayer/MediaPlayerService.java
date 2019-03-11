@@ -1,5 +1,6 @@
 package com.example.rshushilkumar.mplayer;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -13,6 +14,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.session.MediaSessionManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.media.MediaMetadataCompat;
@@ -35,6 +37,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         AudioManager.OnAudioFocusChangeListener {
 
 
+    private static final String CHANNEL_ID = "1999" ;
     // Binder given to clients
     private final IBinder iBinder = new LocalBinder();
     private MediaPlayer mediaPlayer;
@@ -105,7 +108,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             //A PLAY_NEW_AUDIO action received
             //reset mediaPlayer to play the new Audio
             stopMedia();
-            mediaPlayer.reset();
+            //mediaPlayer.reset();
             initMediaPlayer();
             updateMetaData();
             buildNotification(PlaybackStatus.PLAYING);
@@ -192,6 +195,9 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
+            //removeNotification();
         }
     }
 
@@ -246,10 +252,16 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        skipToNext();
+        updateMetaData();
+        buildNotification(PlaybackStatus.PLAYING);
+        Log.d("song","complete");
         //Invoked when playback of a media source has completed.
-        stopMedia();
+        //stopMedia();
+        Log.d("song","media stopped");
         //stop the service
-        stopSelf();
+        //stopSelf();
+        Log.d("song","self stopped");
 
     }
 
@@ -350,7 +362,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         stopMedia();
         //reset mediaPlayer
-        mediaPlayer.reset();
+        //mediaPlayer.reset();
         initMediaPlayer();
     }
 
@@ -371,12 +383,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         stopMedia();
         //reset mediaPlayer
-        mediaPlayer.reset();
+        //mediaPlayer.reset();
         initMediaPlayer();
     }
 
     private void initMediaSession() throws RemoteException {
         if (mediaSessionManager != null) return; //mediaSessionManager exists
+
+        createNotificationChannel();
 
         mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
         // Create a new MediaSession
@@ -457,10 +471,29 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             transportControls.stop();
         }
     }
-    private void buildNotification(PlaybackStatus playbackStatus) {
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MPlayer";
+            String description = "player notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
+
+
+    private void buildNotification(PlaybackStatus playbackStatus) {
+        Log.d("notification","entry");
         int notificationAction = android.R.drawable.ic_media_pause;//needs to be initialized
         PendingIntent play_pauseAction = null;
+
 
         //Build a new notification according to the current state of the MediaPlayer
         if (playbackStatus == PlaybackStatus.PLAYING) {
@@ -473,11 +506,17 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             play_pauseAction = playbackAction(0);
         }
 
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_play_button); //replace with your own image
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),R.drawable.ic_play_button); //replace with your own image
 
         // Create a new Notification
-        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this,"default")
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(android.R.drawable.stat_sys_headset)
+//                .setContentTitle("My notification")
+//                .setContentText("Much longer text that cannot fit one line...")
+//                .setStyle(new NotificationCompat.BigTextStyle()
+//                        .bigText("Much longer text that cannot fit one line..."))
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setShowWhen(false)
                 // Set the Notification style
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
@@ -491,15 +530,16 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                 .setLargeIcon(largeIcon)
                 .setSmallIcon(android.R.drawable.stat_sys_headset)
                 // Set Notification content information
-                .setContentText(activeAudio.getArtist())
-                .setContentTitle(activeAudio.getAlbum())
-                .setContentInfo(activeAudio.getSongTitle())
-                // Add playback actions
+                .setContentInfo(activeAudio.getArtist())
+                .setContentTitle(activeAudio.getSongTitle())
+                .setContentText(activeAudio.getAlbum())
+                 //Add playback actions
                 .addAction(android.R.drawable.ic_media_previous, "previous", playbackAction(3))
                 .addAction(notificationAction, "pause", play_pauseAction)
                 .addAction(android.R.drawable.ic_media_next, "next", playbackAction(2));
 
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
+        Log.d("notification","exit");
     }
 
     private void removeNotification() {
