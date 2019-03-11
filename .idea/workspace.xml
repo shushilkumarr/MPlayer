@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f4c170e-d11f-499d-8a8c-eadf9b05d73e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MainActivity.java" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/classAnalysis.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/javaCompile/javaCompile.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MediaPlayerService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MediaPlayerService.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,8 +63,8 @@
       <file leaf-file-name="MediaPlayerService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MediaPlayerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="446" column="16" lean-forward="false" selection-start-line="446" selection-start-column="16" selection-end-line="446" selection-end-column="16" />
+            <state relative-caret-position="160">
+              <caret line="606" column="14" lean-forward="false" selection-start-line="606" selection-start-column="14" selection-end-line="606" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -2591,8 +2597,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/rshushilkumar/mplayer/MediaPlayerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="446" column="16" lean-forward="false" selection-start-line="446" selection-start-column="16" selection-end-line="446" selection-end-column="16" />
+        <state relative-caret-position="160">
+          <caret line="606" column="14" lean-forward="false" selection-start-line="606" selection-start-column="14" selection-end-line="606" selection-end-column="14" />
           <folding />
         </state>
       </provider>

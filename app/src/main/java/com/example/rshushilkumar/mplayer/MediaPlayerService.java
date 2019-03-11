@@ -604,7 +604,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         super.onDestroy();
         if (mediaPlayer != null) {
             stopMedia();
-            mediaPlayer.release();
+            //mediaPlayer.release();
         }
         removeAudioFocus();
         //Disable the PhoneStateListener
